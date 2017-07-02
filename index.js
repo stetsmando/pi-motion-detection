@@ -24,6 +24,7 @@ class MotionDetectionModule extends EventEmitter {
     const imageCaptureChild = fork(path.resolve(__dirname, 'lib', 'ImageCapture.js'), [ path.resolve(self.config.captureDirectory, 'images', '%d.jpg') ]);
     const imageCompareChild = fork(path.resolve(__dirname, 'lib', 'ImageCompare.js'), [ path.resolve(self.config.captureDirectory, 'images') ]);
     const videoCaptureChild = fork(path.resolve(__dirname, 'lib', 'VideoCapture.js'), [ path.resolve(self.config.captureDirectory, 'videos', 'video.h264') ]);
+    const videoRenameChild = fork(path.resolve(__dirname, 'lib', 'VideoRename.js'), [ path.resolve(self.config.captureDirectory, 'videos') ]);
 
     imageCaptureChild.on('message', (message) => {
       if (message.error) {
@@ -61,6 +62,12 @@ class MotionDetectionModule extends EventEmitter {
       else {
         self.config.continueToCapture = true;
         imageCaptureChild.send({ cmd: 'capture' });
+      }
+    });
+
+    videoRenameChild.on('message', (message) => {
+      if (message.error) {
+        self.emit('error', message.error);
       }
     });
 
