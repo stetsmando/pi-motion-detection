@@ -1,0 +1,39 @@
+{
+  "extends": "vstg",
+  "plugins": [
+    "node"
+  ],
+  "rules": {
+    "no-return-assign": 2,
+    "comma-dangle": [ 2, "always-multiline" ],
+    "computed-property-spacing": [ 2, "never" ],
+    "no-multiple-empty-lines": [ 2, { "max": 2 }],
+    "semi": [ 2, "always" ],
+    "space-before-function-paren": [ 2,  "never" ],
+    "no-invalid-this": "warn",
+    "global-require": "warn",
+    "brace-style": [ 2, "stroustrup" ],
+    "arrow-body-style": [ 2, "as-needed" ],
+    "arrow-parens": [ 2, "always" ],
+    "object-curly-spacing": [
+      2,
+      "always",
+      {
+        "objectsInObjects": false,
+        "arraysInObjects": false
+      }
+    ],
+    "array-bracket-spacing": [
+      2,
+      "always",
+      {
+        "objectsInArrays": false,
+        "arraysInArrays": false
+      }
+    ],
+
+    "standard/object-curly-even-spacing": 0,
+    "promise/always-return": 2,
+    "promise/catch-or-return": 2
+  }
+}
