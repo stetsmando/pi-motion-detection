@@ -11,7 +11,7 @@ class MotionDetectionModule extends EventEmitter {
     this.config = Object.assign({
       captureDirectory: null, // Directory to store tmp photos and video captures
       continueAfterMotion: false, // Flag to control if motion detection will continue after detection
-      captureVideoOnMotion: false,
+      captureVideoOnMotion: false, // Flag to control video capture on motion detection
       continueToCapture: true, // Flag to control internal state of photo capture
     }, options);
 
