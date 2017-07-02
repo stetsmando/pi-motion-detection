@@ -1,0 +1,35 @@
+{
+  "name": "pi-motion-detection",
+  "version": "0.0.1",
+  "description": "A software based detection module for the Raspberry Pi camera",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "6.11.0",
+    "npm": "3.10.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stetsmando/pi-motion-detection.git"
+  },
+  "keywords": [
+    "raspberry",
+    "pi",
+    "camera",
+    "module",
+    "motion",
+    "detection",
+    "software",
+    "pi-camera",
+    "raspistill",
+    "raspivid"
+  ],
+  "author": "Stetson Pierce",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stetsmando/pi-motion-detection/issues"
+  },
+  "homepage": "https://github.com/stetsmando/pi-motion-detection#readme"
+}
