@@ -21,16 +21,9 @@ class MotionDetectionModule extends EventEmitter {
 
   watch() {
     const self = this;
-    const imageCaptureChild = fork(path.resolve(__dirname, 'lib', 'ImageCapture.js'));
+    const imageCaptureChild = fork(path.resolve(__dirname, 'lib', 'ImageCapture.js'), [ path.resolve(self.config.captureDirectory, 'images', '%d.jpg') ]);
     const imageCompareChild = fork(path.resolve(__dirname, 'lib', 'ImageCompare.js'), [ path.resolve(self.config.captureDirectory, 'images') ]);
-    const videoCaptureChild = fork(path.resolve(__dirname, 'lib', 'VideoCapture.js'));
-
-    imageCaptureChild.send({
-      cmd: 'set',
-      set: {
-        output: path.resolve(self.config.captureDirectory, 'images', '%d.jpg'),
-      },
-    });
+    const videoCaptureChild = fork(path.resolve(__dirname, 'lib', 'VideoCapture.js'), [ path.resolve(self.config.captureDirectory, 'videos', 'video.h264') ]);
 
     imageCaptureChild.on('message', (message) => {
       if (message.error) {
@@ -54,11 +47,21 @@ class MotionDetectionModule extends EventEmitter {
             cmd: 'capture',
           });
         }
+        else {
+          self.config.continueToCapture = true;
+          imageCaptureChild.send({ cmd: 'capture' });
+        }
       }
     });
 
     videoCaptureChild.on('message', (message) => {
-
+      if (message.error) {
+        self.emit('error', message.error);
+      }
+      else {
+        self.config.continueToCapture = true;
+        imageCaptureChild.send({ cmd: 'capture' });
+      }
     });
 
     // Start the magic
