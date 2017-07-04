@@ -57,6 +57,7 @@ class MotionDetectionModule extends EventEmitter {
 
     videoCaptureChild.on('message', (message) => {
       if (message.error) {
+        console.log(`Error in video capture: ${ message.error }`);
         self.emit('error', message.error);
       }
       else {
