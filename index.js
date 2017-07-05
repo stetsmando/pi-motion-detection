@@ -59,7 +59,7 @@ class MotionDetectionModule extends EventEmitter {
       if (message.error) {
         self.emit('error', message.error);
       }
-      else {
+      else if (message.response === 'success') {
         self.config.continueToCapture = true;
         imageCaptureChild.send({ cmd: 'capture' });
       }
