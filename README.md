@@ -1,5 +1,5 @@
 # pi-motion-detection
-A software based detection module for the Raspberry Pi camera
+A software based detection module for the Raspberry Pi camera using the [Pi-Camera](https://www.npmjs.com/package/pi-camera) module.
 
 ## Wanna Contribute or Help Out?
 Feel free to head over to the GitHub page for pi-motion-detection and submit comments, issues, pulls, and whatever else you'd like. I plan on adding features as I need them for my own projects so if something isn't happening fast enough for you why not fix it? (:
