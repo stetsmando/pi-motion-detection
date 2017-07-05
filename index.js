@@ -17,6 +17,7 @@ class MotionDetectionModule extends EventEmitter {
 
     // Verify and create (if needed) capture directories
     captureDirsCheck(this.config.captureDirectory);
+    emptyImagesDir(path.resolve(this.config.captureDirectory, 'images'));
   }
 
   watch() {
@@ -91,6 +92,18 @@ function captureDirsCheck(base) {
       // Doesn't exist, create it
       fs.mkdirSync(dir);
     }
+  });
+}
+
+function emptyImagesDir(imagesDir) {
+  const files = fs.readdirSync(imagesDir);
+
+  files.forEach((file) => {
+    fs.unlink(path.resolve(imagesDir, file), (error) => {
+      if (error) {
+        throw error;
+      }
+    });
   });
 }
 
