@@ -28,52 +28,63 @@ class MotionDetectionModule extends EventEmitter {
     const videoRenameChild = fork(path.resolve(__dirname, 'lib', 'VideoRename.js'), [ path.resolve(self.config.captureDirectory, 'videos') ]);
 
     imageCaptureChild.on('message', (message) => {
-      if (message.error) {
+      if (message.result === 'failure') {
         self.emit('error', message.error);
       }
-      else if (message.response === 'success' && self.config.continueToCapture) {
-        imageCaptureChild.send({ cmd: 'capture' });
+      else if (message.result === 'success') {
+        if (self.config.continueToCapture) {
+          imageCaptureChild.send({});
+        }
+      }
+      else {
+        console.log(`Message from imageCaptureChild: ${ message }`);
       }
     });
 
     imageCompareChild.on('message', (message) => {
-      if (message.error) {
+      if (message.result === 'failure') {
         self.emit('error', message.error);
       }
-      else if (message.response === 'motion') {
+      else if (message.result === 'success') {
         self.config.continueToCapture = false;
         self.emit('motion');
 
         if (self.config.captureVideoOnMotion) {
-          videoCaptureChild.send({
-            cmd: 'capture',
-          });
+          videoCaptureChild.send({});
         }
-        else {
-          self.config.continueToCapture = true;
-          imageCaptureChild.send({ cmd: 'capture' });
-        }
+      }
+      else {
+        console.log(`Message from imageCompareChild: ${ message }`);
       }
     });
 
     videoCaptureChild.on('message', (message) => {
-      if (message.error) {
+      if (message.result === 'failure') {
         self.emit('error', message.error);
       }
-      else if (message.response === 'success') {
+      else if (message.result === 'success') {
         self.config.continueToCapture = true;
-        imageCaptureChild.send({ cmd: 'capture' });
+        imageCaptureChild.send({});
+      }
+      else {
+        console.log(`Message from videoCaptureChild: ${ message }`);
       }
     });
 
     videoRenameChild.on('message', (message) => {
-      if (message.error) {
+      if (message.result === 'failure') {
         self.emit('error', message.error);
+      }
+      else if (message.result === 'success') {
+        // I don't think this ever gets hit...
+      }
+      else {
+        console.log(`Message from videoCaptureChild: ${ message }`);
       }
     });
 
     // Start the magic
-    imageCaptureChild.send({ cmd: 'capture' });
+    imageCaptureChild.send({});
   }
 }
 
