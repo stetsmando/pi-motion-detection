@@ -35,7 +35,7 @@ class MotionDetectionModule extends EventEmitter {
         self.emit('error', message.error);
       }
       else if (message.result === 'success') {
-        console.log('Captured photo');
+        // console.log('Captured photo');
         if (self.continueToCapture) {
           self.capturingPhoto = true;
           imageCaptureChild.send({});
@@ -56,7 +56,7 @@ class MotionDetectionModule extends EventEmitter {
           self.emit('error', 'Hit possible race condition, not capturing video at this time.');
         }
         else {
-          console.log('It should be safe to capture video');
+          // console.log('It should be safe to capture video');
           videoCaptureChild.send({});
         }
       }
@@ -74,7 +74,7 @@ class MotionDetectionModule extends EventEmitter {
         imageCaptureChild.send({});
       }
       else {
-        console.log(`Message from videoCaptureChild: ${ message }`);
+        // console.log(`Message from videoCaptureChild: ${ message }`);
       }
     });
 
@@ -86,7 +86,7 @@ class MotionDetectionModule extends EventEmitter {
         // I don't think this ever gets hit...
       }
       else {
-        console.log(`Message from videoCaptureChild: ${ message }`);
+        // console.log(`Message from videoCaptureChild: ${ message }`);
       }
     });
 
