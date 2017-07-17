@@ -1,6 +1,6 @@
 {
   "name": "pi-motion-detection",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A software based detection module for the Raspberry Pi camera",
   "main": "index.js",
   "scripts": {
