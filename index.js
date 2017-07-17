@@ -42,7 +42,7 @@ class MotionDetectionModule extends EventEmitter {
         }
       }
       else {
-        console.log(`Message from imageCaptureChild: ${ message }`);
+        // console.log(`Message from imageCaptureChild: ${ message }`);
       }
     });
 
