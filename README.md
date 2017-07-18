@@ -16,7 +16,7 @@ npm install pi-motion-detection --save
 ## Basic usage
 ```javascript
 const path = require('path');
-const MotionDetectionModule = require('./index');
+const MotionDetectionModule = require('pi-motion-detection');
 const motionDetector = new MotionDetectionModule({
   captureDirectory: path.resolve(__dirname, 'captures'),
 });
