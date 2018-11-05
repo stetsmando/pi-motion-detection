@@ -1,3 +1,5 @@
+__*Pi-Motion-Detection is not actively maintained. PR will be reviewed and accepted.*__
+
 # pi-motion-detection
 A software based detection module for the Raspberry Pi camera using the [Pi-Camera](https://www.npmjs.com/package/pi-camera) module.
 
