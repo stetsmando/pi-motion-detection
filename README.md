@@ -47,5 +47,8 @@ const motionDetector = new MotionDetectionModule({
   
   captureVideoOnMotion: false, // Defaults to false
                                // Flag to control video capture on motion detection
+  
+  keepMotionImages: true,      // Defaults to true
+                               // Flag to control if motion detection should keep images after detection
 });
 ```
