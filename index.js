@@ -51,14 +51,21 @@ class MotionDetectionModule extends EventEmitter {
       self.continueToCapture = false;
       self.emit('motion');
 
+      if (self.capturingPhoto) {
+        self.emit('error', 'Hit possible race condition, not capturing video or continue at this time.');
+        return;
+      }
+      // console.log('It should be safe to continue capture video or image');
+
       if (self.config.captureVideoOnMotion) {
-        if (self.capturingPhoto) {
-          self.emit('error', 'Hit possible race condition, not capturing video at this time.');
-        }
-        else {
-          // console.log('It should be safe to capture video');
-          videoCaptureChild.send({});
-        }
+        videoCaptureChild.send({});
+        return;
+      }
+
+      if (!self.config.captureVideoOnMotion && self.config.continueAfterMotion) {
+        self.continueToCapture = true;
+        self.capturingPhoto = true;
+        imageCaptureChild.send({});
       }
     });
     imageCompare.on('error', (error) => {
@@ -70,8 +77,11 @@ class MotionDetectionModule extends EventEmitter {
         self.emit('error', message.error);
       }
       else if (message.result === 'success') {
-        self.continueToCapture = true;
-        imageCaptureChild.send({});
+        if (self.config.continueAfterMotion) {
+          self.continueToCapture = true;
+          self.capturingPhoto = true;
+          imageCaptureChild.send({});
+        }
       }
       else {
         // console.log(`Message from videoCaptureChild: ${ message }`);
