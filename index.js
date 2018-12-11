@@ -13,6 +13,7 @@ class MotionDetectionModule extends EventEmitter {
       captureDirectory: null, // Directory to store tmp photos and video captures
       continueAfterMotion: false, // Flag to control if motion detection will continue after detection
       captureVideoOnMotion: false, // Flag to control video capture on motion detection
+      keepMotionImages: true, // Flag to control if motion detection should keep images after detection
     }, options);
 
     this.continueToCapture = true; // Flag to control internal state of photo capture
@@ -28,7 +29,7 @@ class MotionDetectionModule extends EventEmitter {
     const imageCaptureChild = fork(path.resolve(__dirname, 'lib', 'ImageCapture.js'), [ path.resolve(self.config.captureDirectory, 'images', '%d.jpg') ]);
     const videoCaptureChild = fork(path.resolve(__dirname, 'lib', 'VideoCapture.js'), [ path.resolve(self.config.captureDirectory, 'videos', 'video.h264') ]);
     const videoRenameChild = fork(path.resolve(__dirname, 'lib', 'VideoRename.js'), [ path.resolve(self.config.captureDirectory, 'videos') ]);
-    const imageCompare = new ImageCompare(path.resolve(self.config.captureDirectory, 'images'));
+    const imageCompare = new ImageCompare(path.resolve(self.config.captureDirectory, 'images'), self.config.keepMotionImages);
 
     imageCaptureChild.on('message', (message) => {
       if (message.result === 'failure') {
